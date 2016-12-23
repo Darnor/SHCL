@@ -1,0 +1,12 @@
+# C++ ignores
+*.o
+*.a
+*.d
+*.so
+
+# OCL Binary header
+src/ocl/shcl_ocl_binary.h
+
+# Release and Debug folder
+**/Debug
+**/Release
