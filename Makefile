@@ -7,6 +7,7 @@ SYMLINK = ln -s
 PREBUILD_SCRIPT = ./prebuild/k2b.sh
 DOXYGEN = doxygen
 GIT = git
+AS_ROOT = sudo
 
 # GCC Flags
 LIB_FLAG = -shared -fPIC
@@ -72,16 +73,13 @@ prebuild:
 $(LIB_FILE_FULL):	$(CPP_FILES)
 	$(GCC) $(CXX_FLAGS) -I$(HEADER_DIR) $^ -o $@ $(DEPENDENCY_LIBS)
 
-install:
-	$(CP) $(HEADER_DIR)/* $(INCLUDE_DIR)
-	$(CP) $(LIB_FILE_FULL) $(LIB_DIR)
-	$(SYMLINK) $(LIB_DIR)/$(LIB_FILE_FULL) $(LIB_DIR)/$(LIB_FILE)
-	$(SYMLINK) $(LIB_DIR)/$(LIB_FILE_FULL) $(LIB_DIR)/$(LIB_FILE).$(LIB_MAJOR_VERSION)
+install:	build
+	$(AS_ROOT) $(CP) $(HEADER_DIR)/* $(INCLUDE_DIR)
+	$(AS_ROOT) $(CP) $(LIB_FILE_FULL) $(LIB_DIR)
+	$(AS_ROOT) $(SYMLINK) $(LIB_DIR)/$(LIB_FILE_FULL) $(LIB_DIR)/$(LIB_FILE)
+	$(AS_ROOT) $(SYMLINK) $(LIB_DIR)/$(LIB_FILE_FULL) $(LIB_DIR)/$(LIB_FILE).$(LIB_MAJOR_VERSION)
 
-update:	gitupdate build uninstall install
-
-gitupdate:
-	$(GIT) pull
+update:	clean build uninstall install
 
 docs:
 	$(DOXYGEN)
@@ -93,9 +91,9 @@ clean:
 uninstall:	uninstallheaders uninstalllib
 
 uninstallheaders:
-	$(RM) $(INCLUDE_DIR)/$(MAIN_LIB_FILE)
-	$(RMDIR) $(INCLUDE_DIR)/$(INTERNAL_DIR)
+	$(AS_ROOT) $(RM) $(INCLUDE_DIR)/$(MAIN_LIB_FILE)
+	$(AS_ROOT) $(RMDIR) $(INCLUDE_DIR)/$(INTERNAL_DIR)
 
 uninstalllib:
-	$(RM) $(LIB_DIR)/$(LIB_FILE) $(LIB_DIR)/$(LIB_FILE).$(LIB_MAJOR_VERSION) $(LIB_DIR)/$(LIB_FILE_FULL)
+	$(AS_ROOT) $(RM) $(LIB_DIR)/$(LIB_FILE) $(LIB_DIR)/$(LIB_FILE).$(LIB_MAJOR_VERSION) $(LIB_DIR)/$(LIB_FILE_FULL)
 
