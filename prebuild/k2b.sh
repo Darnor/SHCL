@@ -43,7 +43,7 @@ NOTICE='/*
 #find ../ -name '*.cl' -type f -exec sh -c 'd=$(dirname {}); f=$(basename {}); cd $d; xxd -i $f > $f.h' -- {} \;
 
 # single file
-cd ../src/ocl
+cd ./src/ocl
 export CURRENT_DIR=$(pwd)
 rm -f shcl_ocl_binary.h
 echo "$NOTICE" >> shcl_ocl_binary.h

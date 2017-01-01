@@ -21,6 +21,12 @@
 #define INCLUDE_SHCL_INTERNAL_VISIBILITY_H_
 #pragma once
 
+/**
+ * @file
+ *
+ * @brief Defines export visibilities macros for different platforms
+ */
+
 #if defined(_WIN32) || defined(__CYGWIN_)
 	#ifdef shcl_EXPORTS
 		#ifdef __GNUC__

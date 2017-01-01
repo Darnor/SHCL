@@ -4,7 +4,7 @@ PROJECT_NAME           = SHCL
 PROJECT_NUMBER         = 0.1.0
 PROJECT_BRIEF          = "The SHCL core library"
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       = build/
+OUTPUT_DIRECTORY       = docs/
 OUTPUT_LANGUAGE        = English
 ABBREVIATE_BRIEF       = "The $name class" \
                          "The $name widget" \
@@ -35,4 +35,4 @@ MACRO_EXPANSION        = YES
 PREDEFINED             = SHCL_DLL_EXPORT=
 ALIASES                += "rst=@verbatim embed:rst:leading-asterisk"
 ALIASES                += "endrst=@endverbatim"
-EXCLUDE                = include/shcl/internal/visibility.h
+EXCLUDE                = 

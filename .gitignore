@@ -3,6 +3,7 @@
 *.a
 *.d
 *.so
+*.so.*
 
 # OCL Binary header
 src/ocl/shcl_ocl_binary.h
@@ -10,3 +11,6 @@ src/ocl/shcl_ocl_binary.h
 # Release and Debug folder
 **/Debug
 **/Release
+
+# Docs folder
+**/docs
