@@ -46,3 +46,11 @@ Run `make update` to reinstall/update the library.
 
 _Note: Requires root access to perform the uninstall and install process._
 
+## Implementation examples using this library
+For an example on how one can use this library there's an C and C++ example
+inside the example folder. You can run `make example` here or change into the
+directory and run `make` there to build the examples.
+
+To clean the examples run `make cleanexample` here or change into the example
+directory and run `make clean` there.
+
