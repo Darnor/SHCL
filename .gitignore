@@ -14,3 +14,7 @@ src/ocl/shcl_ocl_binary.h
 
 # Docs folder
 **/docs
+
+# Compiled examples
+example/cexample
+example/cppexample

@@ -3,6 +3,8 @@ GCC = g++
 RM = rm
 RMDIR = rm -r
 CP = cp -R
+CD = cd
+MAKE = make
 SYMLINK = ln -s
 PREBUILD_SCRIPT = ./prebuild/k2b.sh
 DOXYGEN = doxygen
@@ -52,6 +54,9 @@ DOCS_DIR = ./docs
 INCLUDE_DIR = /usr/include
 LIB_DIR = /usr/lib
 
+# Example directory
+EXAMPLE_DIR = ./example
+
 # Current library version
 LIB_MAJOR_VERSION = 0
 LIB_MINOR_VERSION = 1
@@ -63,15 +68,20 @@ LIB_VERSION = $(LIB_MAJOR_VERSION).$(LIB_MINOR_VERSION).$(LIB_PATCH_VERSION)
 LIB_FILE = libSHCL.so
 LIB_FILE_FULL = $(LIB_FILE).$(LIB_VERSION)
 
-.PHONY:	build prebuild install update gitupdate docs clean uninstall build
+.PHONY:	build prebuild install update gitupdate docs clean \
+	uninstall uninstalllib uninstallheaders example \
+	cleanexample
 
-build:	prebuild $(LIB_FILE_FULL) docs
+build:	prebuild $(LIB_FILE_FULL) docs 
 
 prebuild:
 	$(PREBUILD_SCRIPT)
 
 $(LIB_FILE_FULL):	$(CPP_FILES)
 	$(GCC) $(CXX_FLAGS) -I$(HEADER_DIR) $^ -o $@ $(DEPENDENCY_LIBS)
+
+docs:
+	$(DOXYGEN)
 
 install:	build
 	$(AS_ROOT) $(CP) $(HEADER_DIR)/* $(INCLUDE_DIR)
@@ -81,12 +91,17 @@ install:	build
 
 update:	clean build uninstall install
 
-docs:
-	$(DOXYGEN)
-
 clean:
 	$(RM) $(LIB_FILE_FULL) $(OCL_TO_BINARY_H)
 	$(RMDIR) $(DOCS_DIR)
+
+example:
+	$(CD) $(EXAMPLE_DIR); \
+	$(MAKE)
+
+cleanexample:
+	$(CD) $(EXAMPLE_DIR); \
+	$(MAKE) clean
 
 uninstall:	uninstallheaders uninstalllib
 
