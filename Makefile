@@ -1,3 +1,22 @@
+##
+# Copyright (C) 2016 Hansruedi Patzen
+#
+# This file is part of SHCL.
+#
+# SHCL is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SHCL is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with SHCL. If not, see <http://www.gnu.org/licenses/>.
+##
+
 # Tools
 GCC = g++
 RM = rm
@@ -68,16 +87,15 @@ LIB_VERSION = $(LIB_MAJOR_VERSION).$(LIB_MINOR_VERSION).$(LIB_PATCH_VERSION)
 LIB_FILE = libSHCL.so
 LIB_FILE_FULL = $(LIB_FILE).$(LIB_VERSION)
 
-.PHONY:	build prebuild install update gitupdate docs clean \
-	uninstall uninstalllib uninstallheaders example \
-	cleanexample
+.PHONY:	build install update docs clean uninstall \
+	uninstalllib uninstallheaders example cleanexample
 
-build:	prebuild $(LIB_FILE_FULL) docs 
+build:	$(LIB_FILE_FULL) 
 
-prebuild:
+$(OCL_TO_BINARY_H):
 	$(PREBUILD_SCRIPT)
 
-$(LIB_FILE_FULL):	$(CPP_FILES)
+$(LIB_FILE_FULL):	$(OCL_TO_BINARY_H) $(CPP_FILES)
 	$(GCC) $(CXX_FLAGS) -I$(HEADER_DIR) $^ -o $@ $(DEPENDENCY_LIBS)
 
 docs:
@@ -92,16 +110,14 @@ install:	build
 update:	clean build uninstall install
 
 clean:
-	$(RM) $(LIB_FILE_FULL) $(OCL_TO_BINARY_H)
-	$(RMDIR) $(DOCS_DIR)
+	$(RM) -f $(LIB_FILE_FULL) $(OCL_TO_BINARY_H)
+	$(RMDIR) -f $(DOCS_DIR)
 
 example:
-	$(CD) $(EXAMPLE_DIR); \
-	$(MAKE)
+	$(MAKE) -C $(EXAMPLE_DIR)
 
 cleanexample:
-	$(CD) $(EXAMPLE_DIR); \
-	$(MAKE) clean
+	$(MAKE) -C $(EXAMPLE_DIR) clean
 
 uninstall:	uninstallheaders uninstalllib
 
